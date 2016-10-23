@@ -8,11 +8,12 @@ var passport = require('../../config/lib/local');
 module.exports = (router) => {
 
   // Sign up
-  router.post('/register', function signin(req, res, next) {
+  router.post('/register', [lowercaseEmail,
+    function signin(req, res, next) {
     var User = req.model('User');
-    var password = req.body.user.password;
-    delete req.body.user.password;
-    var user = new User(req.body.user);
+    var password = req.body.password;
+    delete req.body.password;
+    var user = new User(req.body);
     var register = Promise.promisify(User.register, User);
 
     req.data.user = register(user, password).then(() => {
@@ -21,10 +22,10 @@ module.exports = (router) => {
       user.token = jwt.encode(payload, options.secretOrKey);
       res.json({user: user})
     })
-  });
+  }]);
 
   // Sign in
-  router.post('/login', [lowercaseEmail,
+  router.post('/login',
     passport.authenticate('local', { session: false }), (req, res, next) => {
     var payload = {
       sub: req.user._id
@@ -32,7 +33,7 @@ module.exports = (router) => {
     var user = req.user.toJSON();
     user.token = jwt.encode(payload, options.secretOrKey);
     res.json({user: user})
-  }]);
+  });
 
   return router;
 };

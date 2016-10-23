@@ -11,7 +11,7 @@ router
     .use(passport.authorize('jwt', {session: false}))
     .use(require('../middleware/userify'))
     .use('/scrape', require('./scrape'))
-    // .use('/users', require('./users'))
+    .use('/users', require('./users'))
     .use(serialize);
 
 
