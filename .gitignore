@@ -1,0 +1,11 @@
+node_modules
+bower_components
+platforms
+logs
+.idea
+.DS_Store
+npm-debug.log
+seed.json
+/www/
+scrape.js
+dump

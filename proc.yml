@@ -1,0 +1,9 @@
+apps:
+  - name: express
+    script: bin/www
+    instances: 1
+    exec_mode: cluster
+    watch: true
+    error_file: './logs/app.err.log'
+    out_file: './logs/app.out.log'
+    ignore_watch: ['.git','node_modules','www/uploads', 'logs']
